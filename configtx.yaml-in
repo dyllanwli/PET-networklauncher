@@ -90,7 +90,7 @@ Orderer: &OrdererDefaults
         # Preferred Max Bytes: The preferred maximum number of bytes allowed for
         # the serialized messages in a batch. A message larger than the preferred
         # max bytes will result in a batch larger than preferred max bytes.
-        PreferredMaxBytes: 512 KB
+        PreferredMaxBytes: 8192 KB
 
     # Max Channels is the maximum number of channels to allow on the ordering
     # network. When set to 0, this implies no maximum number of channels

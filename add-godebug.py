@@ -11,7 +11,7 @@ with open("./docker-compose.yml",'r') as file:
         line = line.replace("\n","")
         yml.append(line)
         if line.find("environment") > -1:
-            env = "      - GODEBUG=netdns=go"
+            env = "      - GOGC=1000"
             yml.append(env)
             print("adding environment",env)
         
