@@ -204,6 +204,8 @@ fi
 echo "node json2yml.js $jsonFILE $nPeerPerOrg $nOrderer $nBroker $nZoo $nOrg $dbType $nCA"
 
 node json2yml.js $jsonFILE $nPeerPerOrg $nOrderer $nBroker $nZoo $nOrg $dbType $nCA
+./create_local_data_volume.sh
+# add volumes parameter into compose-file
 
 #fix CA _sk in docker-compose.yml
 CWD=$PWD
@@ -241,21 +243,23 @@ done
 if [ $Req == "create" ]; then
 
    #docker-compose -f docker-compose.yml up -d --force-recreate cli $VPN
-   python config-yaml.py
-   docker-compose -f docker-compose.yml up -d --force-recreate
+  #  python config-yaml.py
+  #  docker-compose -f docker-compose.yml up -d --force-recreate
    #docker-compose -f docker-compose.yml up -d --force-recreate $VPN
    ##docker-compose -f docker-compose.yml up -d --force-recreate $VPN
    #for ((i=1; i<$nOrderer; i++))
    #do
        #tmpOrd="orderer"$i
-       #docker-compose -f docker-compose.yml up -d $tmpOrd
+       
+      docker-compose -f docker-compose.yml up -d $tmpOrd
+      echo "test mode will not up the network "
    #done
 fi
 
 if [ $Req == "add" ]; then
-   python config-yaml.py
-   docker-compose -f docker-compose.yml up -d $VPN
-
+  #  python config-yaml.py
+  docker-compose -f docker-compose.yml up -d $VPN
+  echo "test mode will not up the network"
 fi
 
 exit

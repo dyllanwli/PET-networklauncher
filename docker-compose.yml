@@ -50,6 +50,7 @@ services:
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric
     command: orderer
     volumes: 
+      - /data/hyperledger/orderer0.example.com:/var/hyperledger/production
       - /opt/go/src/github.com/hyperledger/fabric-test/fabric/common/tools/cryptogen/crypto-config:/opt/hyperledger/fabric/msp/crypto-config
     ports: 
       - 5005:7050
@@ -72,6 +73,7 @@ services:
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric
     command: orderer
     volumes: 
+      - /data/hyperledger/orderer1.example.com:/var/hyperledger/production
       - /opt/go/src/github.com/hyperledger/fabric-test/fabric/common/tools/cryptogen/crypto-config:/opt/hyperledger/fabric/msp/crypto-config
     ports: 
       - 5006:7050
@@ -94,6 +96,7 @@ services:
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric
     command: orderer
     volumes: 
+      - /data/hyperledger/orderer2.example.com:/var/hyperledger/production
       - /opt/go/src/github.com/hyperledger/fabric-test/fabric/common/tools/cryptogen/crypto-config:/opt/hyperledger/fabric/msp/crypto-config
     ports: 
       - 5007:7050
@@ -120,6 +123,7 @@ services:
       - CORE_PEER_TLS_CERT_FILE=/opt/hyperledger/fabric/msp/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/server.crt
       - CORE_PEER_TLS_ROOTCERT_FILE=/opt/hyperledger/fabric/msp/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt
     volumes: 
+      - /data/hyperledger/peer0.org1.example.com:/var/hyperledger/production
       - /var/run/:/host/var/run/
       - /opt/go/src/github.com/hyperledger/fabric-test/fabric/common/tools/cryptogen/crypto-config:/opt/hyperledger/fabric/msp/crypto-config
     ports: 
@@ -153,6 +157,7 @@ services:
       - CORE_PEER_TLS_CERT_FILE=/opt/hyperledger/fabric/msp/crypto-config/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls/server.crt
       - CORE_PEER_TLS_ROOTCERT_FILE=/opt/hyperledger/fabric/msp/crypto-config/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls/ca.crt
     volumes: 
+      - /data/hyperledger/peer1.org1.example.com:/var/hyperledger/production
       - /var/run/:/host/var/run/
       - /opt/go/src/github.com/hyperledger/fabric-test/fabric/common/tools/cryptogen/crypto-config:/opt/hyperledger/fabric/msp/crypto-config
     ports: 
@@ -187,6 +192,7 @@ services:
       - CORE_PEER_TLS_CERT_FILE=/opt/hyperledger/fabric/msp/crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/server.crt
       - CORE_PEER_TLS_ROOTCERT_FILE=/opt/hyperledger/fabric/msp/crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt
     volumes: 
+      - /data/hyperledger/peer0.org2.example.com:/var/hyperledger/production
       - /var/run/:/host/var/run/
       - /opt/go/src/github.com/hyperledger/fabric-test/fabric/common/tools/cryptogen/crypto-config:/opt/hyperledger/fabric/msp/crypto-config
     ports: 
@@ -220,6 +226,7 @@ services:
       - CORE_PEER_TLS_CERT_FILE=/opt/hyperledger/fabric/msp/crypto-config/peerOrganizations/org2.example.com/peers/peer1.org2.example.com/tls/server.crt
       - CORE_PEER_TLS_ROOTCERT_FILE=/opt/hyperledger/fabric/msp/crypto-config/peerOrganizations/org2.example.com/peers/peer1.org2.example.com/tls/ca.crt
     volumes: 
+      - /data/hyperledger/peer1.org2.example.com:/var/hyperledger/production
       - /var/run/:/host/var/run/
       - /opt/go/src/github.com/hyperledger/fabric-test/fabric/common/tools/cryptogen/crypto-config:/opt/hyperledger/fabric/msp/crypto-config
     ports: 

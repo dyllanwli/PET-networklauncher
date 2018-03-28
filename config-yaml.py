@@ -6,11 +6,13 @@ import sys
 
 
 def readYaml(fileName):
-    with open("./{}".format(fileName), "w") as file:
+    with open("./{}".format(fileName), "r") as file:
         yamlFile = yaml.load_all(file)
         yamlD = OrderedDict()
-        for i in yamlFile:
-            yamlD = i
+        for l1 in yamlFile:
+            for item in l1:
+                print(item)
+            yamlD = l1
     return yamlD
 
 
@@ -22,8 +24,17 @@ def addParameter(yamlD):
 
 
 def writeYaml(writeObject, outputName):
-    with open("./{}".format(outputName), "w") as output:
-        yaml.dump(writeObject, output, default_flow_style=False)
+    print("writing yaml file...")
+    with open("./{}".format(outputName), "r") as output:
+        for data in writeObject:
+            print(data)
+            # if type(writeObject[data]) == type(dict()):
+            for i in writeObject[data]:
+                print(i)
+                if type(i) == type(dict()):
+                    data = OrderedDict(i)
+                    print(data)
+            # yaml.dump(data, output, default_flow_style=False)
         print("File convert has done.")
 
 
