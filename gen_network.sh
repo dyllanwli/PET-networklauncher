@@ -241,7 +241,7 @@ done
 if [ $Req == "create" ]; then
 
    #docker-compose -f docker-compose.yml up -d --force-recreate cli $VPN
-   python add-godebug.py
+   python config-yaml.py
    docker-compose -f docker-compose.yml up -d --force-recreate
    #docker-compose -f docker-compose.yml up -d --force-recreate $VPN
    ##docker-compose -f docker-compose.yml up -d --force-recreate $VPN
@@ -253,7 +253,7 @@ if [ $Req == "create" ]; then
 fi
 
 if [ $Req == "add" ]; then
-   python add-godebug.py
+   python config-yaml.py
    docker-compose -f docker-compose.yml up -d $VPN
 
 fi
