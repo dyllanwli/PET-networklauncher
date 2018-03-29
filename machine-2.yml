@@ -1,7 +1,6 @@
 version: '2'
 
 services:
-
   ca1:
     image: hyperledger/fabric-ca
     environment: 
@@ -10,21 +9,21 @@ services:
       - FABRIC_CA_SERVER_CA_NAME=ca-org2
       - FABRIC_CA_SERVER_TLS_ENABLED=true
       - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.org2.example.com-cert.pem
-      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/5031b947430f47e3205480f23661963fbcdbef3ec2244187faa85fc038a63f80_sk
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/4ad2a3956d1b2eaeff4512b4e6a75eb289eb5bd4a6da890b5a221b63d7ab5310_sk
     ports: 
       - 7055:7054
-    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.org2.example.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/5031b947430f47e3205480f23661963fbcdbef3ec2244187faa85fc038a63f80_sk -b admin:adminpw -d'
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.org2.example.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/4ad2a3956d1b2eaeff4512b4e6a75eb289eb5bd4a6da890b5a221b63d7ab5310_sk -b admin:adminpw -d'
     volumes: 
       - /opt/go/src/github.com/hyperledger/fabric-test/fabric/common/tools/cryptogen/crypto-config/peerOrganizations/org2.example.com/ca/:/etc/hyperledger/fabric-ca-server-config
     container_name: ca1
     extra_hosts:
-      - "orderer0.example.com:172.18.244.211"
-      - "orderer1.example.com:172.18.244.211"
-      - "orderer2.example.com:172.18.244.211"
-      - "peer0.org1.example.com:172.18.244.211"
-      - "peer1.org1.example.com:172.18.244.211"
-      - "peer0.org2.example.com:172.18.244.249"
-      - "peer1.org2.example.com:172.18.244.249"
+      - "orderer0.example.com:39.108.167.205"
+      - "orderer1.example.com:39.108.167.205"
+      - "orderer2.example.com:39.108.167.205"
+      - "peer0.org1.example.com:39.108.167.205"
+      - "peer1.org1.example.com:39.108.167.205"
+      - "peer0.org2.example.com:120.79.163.88"
+      - "peer1.org2.example.com:120.79.163.88"
 
   peer0.org2.example.com:
     image: hyperledger/fabric-peer
@@ -49,25 +48,22 @@ services:
       - CORE_PEER_TLS_CERT_FILE=/opt/hyperledger/fabric/msp/crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/server.crt
       - CORE_PEER_TLS_ROOTCERT_FILE=/opt/hyperledger/fabric/msp/crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt
     volumes: 
-      - /data/hyperledger/peer0.org2.example.com:/var/hyperledger/production
       - /var/run/:/host/var/run/
       - /opt/go/src/github.com/hyperledger/fabric-test/fabric/common/tools/cryptogen/crypto-config:/opt/hyperledger/fabric/msp/crypto-config
     ports: 
       - 7063:7051
       - 6053:7053
-    depends_on: 
-      - orderer1.example.com
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: peer node start
     container_name: peer0.org2.example.com
     extra_hosts:
-      - "orderer0.example.com:172.18.244.211"
-      - "orderer1.example.com:172.18.244.211"
-      - "orderer2.example.com:172.18.244.211"
-      - "peer0.org1.example.com:172.18.244.211"
-      - "peer1.org1.example.com:172.18.244.211"
-      - "peer0.org2.example.com:172.18.244.249"
-      - "peer1.org2.example.com:172.18.244.249"
+      - "orderer0.example.com:39.108.167.205"
+      - "orderer1.example.com:39.108.167.205"
+      - "orderer2.example.com:39.108.167.205"
+      - "peer0.org1.example.com:39.108.167.205"
+      - "peer1.org1.example.com:39.108.167.205"
+      - "peer0.org2.example.com:120.79.163.88"
+      - "peer1.org2.example.com:120.79.163.88"
 
   peer1.org2.example.com:
     image: hyperledger/fabric-peer
@@ -92,24 +88,20 @@ services:
       - CORE_PEER_TLS_CERT_FILE=/opt/hyperledger/fabric/msp/crypto-config/peerOrganizations/org2.example.com/peers/peer1.org2.example.com/tls/server.crt
       - CORE_PEER_TLS_ROOTCERT_FILE=/opt/hyperledger/fabric/msp/crypto-config/peerOrganizations/org2.example.com/peers/peer1.org2.example.com/tls/ca.crt
     volumes: 
-      - /data/hyperledger/peer1.org2.example.com:/var/hyperledger/production
       - /var/run/:/host/var/run/
       - /opt/go/src/github.com/hyperledger/fabric-test/fabric/common/tools/cryptogen/crypto-config:/opt/hyperledger/fabric/msp/crypto-config
     ports: 
       - 7064:7051
       - 6054:7053
-    depends_on: 
-      - orderer1.example.com
-      - peer0.org2.example.com
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: peer node start
     container_name: peer1.org2.example.com
     extra_hosts:
-      - "orderer0.example.com:172.18.244.211"
-      - "orderer1.example.com:172.18.244.211"
-      - "orderer2.example.com:172.18.244.211"
-      - "peer0.org1.example.com:172.18.244.211"
-      - "peer1.org1.example.com:172.18.244.211"
-      - "peer0.org2.example.com:172.18.244.249"
-      - "peer1.org2.example.com:172.18.244.249"
+      - "orderer0.example.com:39.108.167.205"
+      - "orderer1.example.com:39.108.167.205"
+      - "orderer2.example.com:39.108.167.205"
+      - "peer0.org1.example.com:39.108.167.205"
+      - "peer1.org1.example.com:39.108.167.205"
+      - "peer0.org2.example.com:120.79.163.88"
+      - "peer1.org2.example.com:120.79.163.88"
 
