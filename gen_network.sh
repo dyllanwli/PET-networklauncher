@@ -252,14 +252,14 @@ if [ $Req == "create" ]; then
        #tmpOrd="orderer"$i
        
       docker-compose -f docker-compose.yml up -d $tmpOrd
-      echo "test mode will not up the network "
+      # echo "test mode will not up the network "
    #done
 fi
 
 if [ $Req == "add" ]; then
   #  python config-yaml.py
   docker-compose -f docker-compose.yml up -d $VPN
-  echo "test mode will not up the network"
+  # echo "test mode will not up the network"
 fi
 
 exit

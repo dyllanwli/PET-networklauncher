@@ -1,6 +1,7 @@
 from __future__ import print_function
 import sys
 import yaml
+import os
 from subprocess import check_output
 
 arg = sys.argv[1:]
@@ -34,8 +35,11 @@ def checkYaml(fileName, imageList):
                     check_image = True
                     if line.find("volumes") > -1:
                         # you can set arguments to modify
-                        print("Change {} arugments ... ".format(imageList[imageName]))
-                        add_arg = "      - /data/hyperledger/{}/var/hyperledger/production".format(imageList[imageName])
+                        print("Change {}'s arugments ... ".format(imageList[imageName]))
+                        if imageList[imageName].find("couchdb") > -1 :
+                            add_arg = "      - /data/hyperledger/{}/opt/couchdb/data".format(imageList[imageName])
+                        else:  
+                            add_arg = "      - /data/hyperledger/{}/var/hyperledger/production".format(imageList[imageName])
                         output.append(add_arg)
                     if line.find("container_name:") > -1 :
                         check_image = False
@@ -47,12 +51,14 @@ def readContainer(yamlFile):
     imageList = []
     for i in yamlFile:
         for imageName in yamlFile[i]:
-            if imageName.find("orderer") > -1 or imageName.find("peer") > -1:
+            print(imageName)
+            if imageName.find("orderer") > -1 or imageName.find("peer") > -1 or imageName.find("couchdb") > -1:
                 print("creating directory",imageName)
                 imageList.append(imageName+":")
                 # add : to suit the yaml file name
                 if not path == "test":
-                    check_output("mkdir {}/{}".format(path,imageName), shell=True)
+                    if not os.path.isdir("{}/{}".format(path,imageName)):
+                        check_output("mkdir {}/{}".format(path,imageName), shell=True)
     return imageList
                 
 

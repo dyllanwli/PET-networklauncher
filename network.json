@@ -38,6 +38,7 @@
                 "ZOO_PORT": "zookeeper:2181",
                 "ZOO_SERVERS": "ZOO_SERVERS=server.1=zookeeper0:2182:2183:participant"
             },
+            "volumes":["/data/docker-entrypoint.sh:/docker-entrypoint.sh"],
             "ports": [
                 "zooPort:2181"
             ],
@@ -123,6 +124,7 @@
             "ports": [
                 "5984:5984"
             ],
+            "volumes": [],
             "container_name": "couchdb"
         }
     }
