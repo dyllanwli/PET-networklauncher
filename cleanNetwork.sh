@@ -24,7 +24,7 @@ if [ $# -ne 1 ]; then
     printHelp
 fi
 
-keyWord=$1
+keyWord="example.com"
 
 #bring down network
 echo "..... clean network ..... docker images key word: $keyWord"
@@ -40,13 +40,13 @@ else
     docker rm -f $containerIDs
 fi
 
-#remove dead docker images
-echo "..... remove docker images ....."
-dockerImageIDs=$(docker images | grep "$keyWord" | awk '{print $3}')
-if [ -z "$dockerImageIDs" -o "$dockerImageIDs" = " " ]; then
-    echo "..... No images to be deleted ....."
-else
-    docker rmi -f $dockerImageIDs
-fi
+# #remove dead docker images
+# echo "..... remove docker images ....."
+# dockerImageIDs=$(docker images | grep "$keyWord" | awk '{print $3}')
+# if [ -z "$dockerImageIDs" -o "$dockerImageIDs" = " " ]; then
+#     echo "..... No images to be deleted ....."
+# else
+#     docker rmi -f $dockerImageIDs
+# fi
 
 echo "clean Network completed."

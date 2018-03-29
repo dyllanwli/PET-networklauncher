@@ -1,0 +1,284 @@
+version: '2'
+
+services:
+  ca0:
+    image: hyperledger/fabric-ca
+    environment: 
+      - GODEBUG=netdns=go
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-org1
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.org1.example.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/e32b683abebc2509588c34dce11daae7671d8837ded354d06f2dcef596a43a21_sk
+    ports: 
+      - 7054:7054
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.org1.example.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/e32b683abebc2509588c34dce11daae7671d8837ded354d06f2dcef596a43a21_sk -b admin:adminpw -d'
+    volumes: 
+      - /opt/go/src/github.com/hyperledger/fabric-test/fabric/common/tools/cryptogen/crypto-config/peerOrganizations/org1.example.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca0
+
+  ca1:
+    image: hyperledger/fabric-ca
+    environment: 
+      - GODEBUG=netdns=go
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-org2
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.org2.example.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/5031b947430f47e3205480f23661963fbcdbef3ec2244187faa85fc038a63f80_sk
+    ports: 
+      - 7055:7054
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.org2.example.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/5031b947430f47e3205480f23661963fbcdbef3ec2244187faa85fc038a63f80_sk -b admin:adminpw -d'
+    volumes: 
+      - /opt/go/src/github.com/hyperledger/fabric-test/fabric/common/tools/cryptogen/crypto-config/peerOrganizations/org2.example.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca1
+
+  zookeeper0:
+    image: hyperledger/fabric-zookeeper
+    environment: 
+      - GODEBUG=netdns=go
+      - ZOO_MY_ID=1
+      - ZOO_PORT=2181
+      - ZOO_SERVERS=server.1=zookeeper0:2182:2183:participant
+    volumes: 
+      - /data/docker-entrypoint.sh:/docker-entrypoint.sh
+    ports:
+      - 2181:2181
+    container_name: zookeeper0
+
+  kafka0:
+    image: hyperledger/fabric-kafka
+    environment: 
+      - GODEBUG=netdns=go
+      - KAFKA_BROKER_ID=0
+      - KAFKA_DEFAULT_REPLICATION_FACTOR=1
+      - KAFKA_MESSAGE_MAX_BYTES=103809024
+      - KAFKA_REPLICA_FETCH_MAX_BYTES=103809024
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper0:2181
+      - KAFKA_MIN_INSYNC_REPLICAS=1
+      - KAFKA_UNCLEAN_LEADER_ELECTION_ENABLE=false
+    depends_on: 
+      - zookeeper0
+    container_name: kafka0
+    ports: 
+      - 9092:9092
+
+  orderer0.example.com:
+    image: hyperledger/fabric-orderer
+    environment: 
+      - GODEBUG=netdns=go
+      - GOGC=200
+      - ORDERER_GENERAL_LOGLEVEL=ERROR
+      - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
+      - ORDERER_GENERAL_GENESISMETHOD=file
+      - ORDERER_GENERAL_GENESISFILE=/opt/hyperledger/fabric/msp/crypto-config/ordererOrganizations/orderer.block
+      - ORDERER_GENERAL_LOCALMSPID=OrdererOrg
+      - ORDERER_GENERAL_LOCALMSPDIR=/opt/hyperledger/fabric/msp/crypto-config/ordererOrganizations/example.com/orderers/orderer0.example.com/msp
+      - ORDERER_GENERAL_TLS_ENABLED=true
+      - ORDERER_GENERAL_TLS_PRIVATEKEY=/opt/hyperledger/fabric/msp/crypto-config/ordererOrganizations/example.com/orderers/orderer0.example.com/tls/server.key
+      - ORDERER_GENERAL_TLS_CERTIFICATE=/opt/hyperledger/fabric/msp/crypto-config/ordererOrganizations/example.com/orderers/orderer0.example.com/tls/server.crt
+      - ORDERER_GENERAL_TLS_ROOTCAS=[/opt/hyperledger/fabric/msp/crypto-config/ordererOrganizations/example.com/orderers/orderer0.example.com/tls/ca.crt]
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric
+    command: orderer
+    volumes: 
+      - /data/hyperledger/orderer0.example.com:/var/hyperledger/production
+      - /opt/go/src/github.com/hyperledger/fabric-test/fabric/common/tools/cryptogen/crypto-config:/opt/hyperledger/fabric/msp/crypto-config
+    ports: 
+      - 5005:7050
+    container_name: orderer0.example.com
+    depends_on: 
+      - kafka0
+
+  orderer1.example.com:
+    image: hyperledger/fabric-orderer
+    environment: 
+      - GODEBUG=netdns=go
+      - GOGC=200
+      - ORDERER_GENERAL_LOGLEVEL=ERROR
+      - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
+      - ORDERER_GENERAL_GENESISMETHOD=file
+      - ORDERER_GENERAL_GENESISFILE=/opt/hyperledger/fabric/msp/crypto-config/ordererOrganizations/orderer.block
+      - ORDERER_GENERAL_LOCALMSPID=OrdererOrg
+      - ORDERER_GENERAL_LOCALMSPDIR=/opt/hyperledger/fabric/msp/crypto-config/ordererOrganizations/example.com/orderers/orderer1.example.com/msp
+      - ORDERER_GENERAL_TLS_ENABLED=true
+      - ORDERER_GENERAL_TLS_PRIVATEKEY=/opt/hyperledger/fabric/msp/crypto-config/ordererOrganizations/example.com/orderers/orderer1.example.com/tls/server.key
+      - ORDERER_GENERAL_TLS_CERTIFICATE=/opt/hyperledger/fabric/msp/crypto-config/ordererOrganizations/example.com/orderers/orderer1.example.com/tls/server.crt
+      - ORDERER_GENERAL_TLS_ROOTCAS=[/opt/hyperledger/fabric/msp/crypto-config/ordererOrganizations/example.com/orderers/orderer1.example.com/tls/ca.crt]
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric
+    command: orderer
+    volumes: 
+      - /data/hyperledger/orderer1.example.com:/var/hyperledger/production
+      - /opt/go/src/github.com/hyperledger/fabric-test/fabric/common/tools/cryptogen/crypto-config:/opt/hyperledger/fabric/msp/crypto-config
+    ports: 
+      - 5006:7050
+    container_name: orderer1.example.com
+    depends_on: 
+      - kafka0
+
+  orderer2.example.com:
+    image: hyperledger/fabric-orderer
+    environment: 
+      - GODEBUG=netdns=go
+      - GOGC=200
+      - ORDERER_GENERAL_LOGLEVEL=ERROR
+      - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
+      - ORDERER_GENERAL_GENESISMETHOD=file
+      - ORDERER_GENERAL_GENESISFILE=/opt/hyperledger/fabric/msp/crypto-config/ordererOrganizations/orderer.block
+      - ORDERER_GENERAL_LOCALMSPID=OrdererOrg
+      - ORDERER_GENERAL_LOCALMSPDIR=/opt/hyperledger/fabric/msp/crypto-config/ordererOrganizations/example.com/orderers/orderer2.example.com/msp
+      - ORDERER_GENERAL_TLS_ENABLED=true
+      - ORDERER_GENERAL_TLS_PRIVATEKEY=/opt/hyperledger/fabric/msp/crypto-config/ordererOrganizations/example.com/orderers/orderer2.example.com/tls/server.key
+      - ORDERER_GENERAL_TLS_CERTIFICATE=/opt/hyperledger/fabric/msp/crypto-config/ordererOrganizations/example.com/orderers/orderer2.example.com/tls/server.crt
+      - ORDERER_GENERAL_TLS_ROOTCAS=[/opt/hyperledger/fabric/msp/crypto-config/ordererOrganizations/example.com/orderers/orderer2.example.com/tls/ca.crt]
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric
+    command: orderer
+    volumes: 
+      - /data/hyperledger/orderer2.example.com:/var/hyperledger/production
+      - /opt/go/src/github.com/hyperledger/fabric-test/fabric/common/tools/cryptogen/crypto-config:/opt/hyperledger/fabric/msp/crypto-config
+    ports: 
+      - 5007:7050
+    container_name: orderer2.example.com
+    depends_on: 
+      - kafka0
+
+  peer0.org1.example.com:
+    image: hyperledger/fabric-peer
+    environment: 
+      - GODEBUG=netdns=go
+      - GOGC=200
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - CORE_LOGGING_LEVEL=INFO
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=nl_default
+      - CORE_PEER_ENDORSER_ENABLED=true
+      - CORE_PEER_PROFILE_ENABLED=true
+      - CORE_PEER_GOSSIP_USELEADERELECTION=true
+      - CORE_PEER_GOSSIP_ORGLEADER=false
+      - CORE_PEER_ID=peer0.org1.example.com
+      - CORE_PEER_MSPCONFIGPATH=/opt/hyperledger/fabric/msp/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/msp
+      - CORE_PEER_LOCALMSPID=PeerOrg1
+      - CORE_PEER_ADDRESS=peer0.org1.example.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.org1.example.com:7051
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_TLS_KEY_FILE=/opt/hyperledger/fabric/msp/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/server.key
+      - CORE_PEER_TLS_CERT_FILE=/opt/hyperledger/fabric/msp/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/server.crt
+      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/hyperledger/fabric/msp/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt
+    volumes: 
+      - /data/hyperledger/peer0.org1.example.com:/var/hyperledger/production
+      - /var/run/:/host/var/run/
+      - /opt/go/src/github.com/hyperledger/fabric-test/fabric/common/tools/cryptogen/crypto-config:/opt/hyperledger/fabric/msp/crypto-config
+    ports: 
+      - 7061:7051
+      - 6051:7053
+    depends_on: 
+      - orderer0.example.com
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: peer node start
+    container_name: peer0.org1.example.com
+
+  peer1.org1.example.com:
+    image: hyperledger/fabric-peer
+    environment: 
+      - GODEBUG=netdns=go
+      - GOGC=200
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - CORE_LOGGING_LEVEL=INFO
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=nl_default
+      - CORE_PEER_ENDORSER_ENABLED=true
+      - CORE_PEER_PROFILE_ENABLED=true
+      - CORE_PEER_GOSSIP_USELEADERELECTION=true
+      - CORE_PEER_GOSSIP_ORGLEADER=false
+      - CORE_PEER_ID=peer1.org1.example.com
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.org1.example.com:7051
+      - CORE_PEER_MSPCONFIGPATH=/opt/hyperledger/fabric/msp/crypto-config/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/msp
+      - CORE_PEER_LOCALMSPID=PeerOrg1
+      - CORE_PEER_ADDRESS=peer1.org1.example.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.org1.example.com:7051
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_TLS_KEY_FILE=/opt/hyperledger/fabric/msp/crypto-config/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls/server.key
+      - CORE_PEER_TLS_CERT_FILE=/opt/hyperledger/fabric/msp/crypto-config/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls/server.crt
+      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/hyperledger/fabric/msp/crypto-config/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls/ca.crt
+    volumes: 
+      - /data/hyperledger/peer1.org1.example.com:/var/hyperledger/production
+      - /var/run/:/host/var/run/
+      - /opt/go/src/github.com/hyperledger/fabric-test/fabric/common/tools/cryptogen/crypto-config:/opt/hyperledger/fabric/msp/crypto-config
+    ports: 
+      - 7062:7051
+      - 6052:7053
+    depends_on: 
+      - orderer0.example.com
+      - peer0.org1.example.com
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: peer node start
+    container_name: peer1.org1.example.com
+
+  peer0.org2.example.com:
+    image: hyperledger/fabric-peer
+    environment: 
+      - GODEBUG=netdns=go
+      - GOGC=200
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - CORE_LOGGING_LEVEL=INFO
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=nl_default
+      - CORE_PEER_ENDORSER_ENABLED=true
+      - CORE_PEER_PROFILE_ENABLED=true
+      - CORE_PEER_GOSSIP_USELEADERELECTION=true
+      - CORE_PEER_GOSSIP_ORGLEADER=false
+      - CORE_PEER_ID=peer0.org2.example.com
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.org2.example.com:7051
+      - CORE_PEER_MSPCONFIGPATH=/opt/hyperledger/fabric/msp/crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/msp
+      - CORE_PEER_LOCALMSPID=PeerOrg2
+      - CORE_PEER_ADDRESS=peer0.org2.example.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.org2.example.com:7051
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_TLS_KEY_FILE=/opt/hyperledger/fabric/msp/crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/server.key
+      - CORE_PEER_TLS_CERT_FILE=/opt/hyperledger/fabric/msp/crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/server.crt
+      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/hyperledger/fabric/msp/crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt
+    volumes: 
+      - /data/hyperledger/peer0.org2.example.com:/var/hyperledger/production
+      - /var/run/:/host/var/run/
+      - /opt/go/src/github.com/hyperledger/fabric-test/fabric/common/tools/cryptogen/crypto-config:/opt/hyperledger/fabric/msp/crypto-config
+    ports: 
+      - 7063:7051
+      - 6053:7053
+    depends_on: 
+      - orderer1.example.com
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: peer node start
+    container_name: peer0.org2.example.com
+
+  peer1.org2.example.com:
+    image: hyperledger/fabric-peer
+    environment: 
+      - GODEBUG=netdns=go
+      - GOGC=200
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - CORE_LOGGING_LEVEL=INFO
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=nl_default
+      - CORE_PEER_ENDORSER_ENABLED=true
+      - CORE_PEER_PROFILE_ENABLED=true
+      - CORE_PEER_GOSSIP_USELEADERELECTION=true
+      - CORE_PEER_GOSSIP_ORGLEADER=false
+      - CORE_PEER_ID=peer1.org2.example.com
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.org2.example.com:7051
+      - CORE_PEER_MSPCONFIGPATH=/opt/hyperledger/fabric/msp/crypto-config/peerOrganizations/org2.example.com/peers/peer1.org2.example.com/msp
+      - CORE_PEER_LOCALMSPID=PeerOrg2
+      - CORE_PEER_ADDRESS=peer1.org2.example.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.org2.example.com:7051
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_TLS_KEY_FILE=/opt/hyperledger/fabric/msp/crypto-config/peerOrganizations/org2.example.com/peers/peer1.org2.example.com/tls/server.key
+      - CORE_PEER_TLS_CERT_FILE=/opt/hyperledger/fabric/msp/crypto-config/peerOrganizations/org2.example.com/peers/peer1.org2.example.com/tls/server.crt
+      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/hyperledger/fabric/msp/crypto-config/peerOrganizations/org2.example.com/peers/peer1.org2.example.com/tls/ca.crt
+    volumes: 
+      - /data/hyperledger/peer1.org2.example.com:/var/hyperledger/production
+      - /var/run/:/host/var/run/
+      - /opt/go/src/github.com/hyperledger/fabric-test/fabric/common/tools/cryptogen/crypto-config:/opt/hyperledger/fabric/msp/crypto-config
+    ports: 
+      - 7064:7051
+      - 6054:7053
+    depends_on: 
+      - orderer1.example.com
+      - peer0.org2.example.com
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: peer node start
+    container_name: peer1.org2.example.com
+
