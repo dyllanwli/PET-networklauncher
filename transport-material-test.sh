@@ -12,5 +12,5 @@ CRYPTO_CONFIG_DIR=/opt/go/src/github.com/hyperledger/fabric-test/fabric/common/t
 echo "removing $HOST2 cryptogen"
 ssh root@$HOST2 -i ~/.ssh/id_rsa "cd $CRYPTO_CONFIG_DIR; rm -rf cryptogen"
 cd $CRYPTO_CONFIG_DIR
-echo "transporting file to $HOST2"
+echo "transporting $CRYPTO_CONFIG_DIR to $HOST2"
 scp -i ~/.ssh/id_rsa -r cryptogen root@${HOST2}:$CRYPTO_CONFIG_DIR

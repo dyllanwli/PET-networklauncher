@@ -4,6 +4,9 @@ Network Launcher
 
 1. each of container arguments in network.json must end with container_name
 
+
+test network usage `./networkLauncher.sh -o 3 -x 2 -r 2 -p 2 -n 1 -t solo -f test -w 0.0.0.0 -S enabled -c 2s -l INFO -B 500`
+
 # networkLauncher.sh
 
 This is the main script to execute all tasks.
