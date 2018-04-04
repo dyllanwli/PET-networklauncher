@@ -1,25 +1,8 @@
 Network Launcher
 -------
+## Attention
 
-
-
-The network Launcher can execute the following task:
-
-1. generate crypto-config yaml and execute cryptogen to generate crypto
-2. create configtx.yml
-3. create orderer genesis block
-4. create channel configuration transaction
-5. create a docker-compose.yml and launch a network
-
-The usages of each script is given below so that they can be executed separately as needed.  However, the script, networkLauncher.sh, is designed to execute all tasks listed above sequentially.
-
-## Code Base
-
-- fabric commit level: v1.0.0
-- fabric-sdk-node commit level: v1.0.0
-- fabric-ca commit level: v1.0.0
-
-It is user's responsibility to install related docker images on the system. User can either create docker images using `make docker` or use the bootstrap scripts in fabric-test/fabric/scripts to pull docker images from dockerhub.
+1. each of container arguments in network.json must end with container_name
 
 # networkLauncher.sh
 

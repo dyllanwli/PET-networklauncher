@@ -59,10 +59,10 @@
             "depends_on": [
                 "zookeeper"
             ],
-            "container_name": "kafka0",
             "ports": [
                 "9092:9092"
-            ]
+            ],
+            "container_name": "kafka0"
         },
         "orderer": {
             "image": "hyperledger/fabric-orderer",
@@ -82,10 +82,10 @@
             "ports": [
                 "7050:7050"
             ],
-            "container_name": "orderer",
             "depends_on": [
                 "kafka"
-            ]
+            ],
+            "container_name": "orderer"
         },
         "peer": {
             "image": "hyperledger/fabric-peer",
@@ -124,7 +124,6 @@
             "ports": [
                 "5984:5984"
             ],
-            "volumes": [],
             "container_name": "couchdb"
         }
     }

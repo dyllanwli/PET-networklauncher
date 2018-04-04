@@ -42,6 +42,7 @@ def checkYaml(fileName, imageList):
                             add_arg = "      - /data/hyperledger/{}/var/hyperledger/production".format(imageList[imageName])
                         output.append(add_arg)
                     if line.find("container_name:") > -1 :
+                        # container name is the last argumetn of the docker-compose 
                         check_image = False
             # print("en loops")
     return output

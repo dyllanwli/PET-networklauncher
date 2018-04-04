@@ -251,7 +251,8 @@ if [ $Req == "create" ]; then
    #do
        #tmpOrd="orderer"$i
        
-      docker-compose -f docker-compose.yml up -d $tmpOrd
+      # docker-compose -f docker-compose.yml up -d $tmpOrd
+      echo "test mode do not create the network"
    #done
 fi
 

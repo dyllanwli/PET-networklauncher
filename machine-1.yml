@@ -16,14 +16,14 @@ services:
     volumes: 
       - /opt/go/src/github.com/hyperledger/fabric-test/fabric/common/tools/cryptogen/crypto-config/peerOrganizations/org1.example.com/ca/:/etc/hyperledger/fabric-ca-server-config
     container_name: ca0
-    extra_hosts:
-      - "orderer0.example.com:172.18.244.211"
-      - "orderer1.example.com:172.18.244.211"
-      - "orderer2.example.com:172.18.244.211"
-      - "peer0.org1.example.com:172.18.244.211"
-      - "peer1.org1.example.com:172.18.244.211"
-      - "peer0.org2.example.com:172.18.244.249"
-      - "peer1.org2.example.com:172.18.244.249"
+    external_links:
+      - "orderer0.example.com:orderer0.example.com"
+      - "orderer1.example.com:orderer1.example.com"
+      - "orderer2.example.com:orderer2.example.com"
+      - "peer0.org1.example.com:peer0.org1.example.com"
+      - "peer1.org1.example.com:peer1.org1.example.com"
+      - "peer0.org2.example.com:peer0.org2.example.com"
+      - "peer1.org2.example.com:peer1.org2.example.com"
 
 
   orderer0.example.com:
@@ -48,14 +48,14 @@ services:
     ports: 
       - 5005:7050
     container_name: orderer0.example.com
-    extra_hosts:
-      - "orderer0.example.com:172.18.244.211"
-      - "orderer1.example.com:172.18.244.211"
-      - "orderer2.example.com:172.18.244.211"
-      - "peer0.org1.example.com:172.18.244.211"
-      - "peer1.org1.example.com:172.18.244.211"
-      - "peer0.org2.example.com:172.18.244.249"
-      - "peer1.org2.example.com:172.18.244.249"
+    external_links:
+      - "orderer0.example.com:orderer0.example.com"
+      - "orderer1.example.com:orderer1.example.com"
+      - "orderer2.example.com:orderer2.example.com"
+      - "peer0.org1.example.com:peer0.org1.example.com"
+      - "peer1.org1.example.com:peer1.org1.example.com"
+      - "peer0.org2.example.com:peer0.org2.example.com"
+      - "peer1.org2.example.com:peer1.org2.example.com"
 
   orderer1.example.com:
     image: hyperledger/fabric-orderer
@@ -79,14 +79,14 @@ services:
     ports: 
       - 5006:7050
     container_name: orderer1.example.com
-    extra_hosts:
-      - "orderer0.example.com:172.18.244.211"
-      - "orderer1.example.com:172.18.244.211"
-      - "orderer2.example.com:172.18.244.211"
-      - "peer0.org1.example.com:172.18.244.211"
-      - "peer1.org1.example.com:172.18.244.211"
-      - "peer0.org2.example.com:172.18.244.249"
-      - "peer1.org2.example.com:172.18.244.249"
+    external_links:
+      - "orderer0.example.com:orderer0.example.com"
+      - "orderer1.example.com:orderer1.example.com"
+      - "orderer2.example.com:orderer2.example.com"
+      - "peer0.org1.example.com:peer0.org1.example.com"
+      - "peer1.org1.example.com:peer1.org1.example.com"
+      - "peer0.org2.example.com:peer0.org2.example.com"
+      - "peer1.org2.example.com:peer1.org2.example.com"
 
   orderer2.example.com:
     image: hyperledger/fabric-orderer
@@ -110,14 +110,14 @@ services:
     ports: 
       - 5007:7050
     container_name: orderer2.example.com
-    extra_hosts:
-      - "orderer0.example.com:172.18.244.211"
-      - "orderer1.example.com:172.18.244.211"
-      - "orderer2.example.com:172.18.244.211"
-      - "peer0.org1.example.com:172.18.244.211"
-      - "peer1.org1.example.com:172.18.244.211"
-      - "peer0.org2.example.com:172.18.244.249"
-      - "peer1.org2.example.com:172.18.244.249"
+    external_links:
+      - "orderer0.example.com:orderer0.example.com"
+      - "orderer1.example.com:orderer1.example.com"
+      - "orderer2.example.com:orderer2.example.com"
+      - "peer0.org1.example.com:peer0.org1.example.com"
+      - "peer1.org1.example.com:peer1.org1.example.com"
+      - "peer0.org2.example.com:peer0.org2.example.com"
+      - "peer1.org2.example.com:peer1.org2.example.com"
 
   peer0.org1.example.com:
     image: hyperledger/fabric-peer
@@ -126,7 +126,6 @@ services:
       - GOGC=200
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
       - CORE_LOGGING_LEVEL=INFO
-      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=nl_default
       - CORE_PEER_ENDORSER_ENABLED=true
       - CORE_PEER_PROFILE_ENABLED=true
       - CORE_PEER_GOSSIP_USELEADERELECTION=true
@@ -151,14 +150,14 @@ services:
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: peer node start
     container_name: peer0.org1.example.com
-    extra_hosts:
-      - "orderer0.example.com:172.18.244.211"
-      - "orderer1.example.com:172.18.244.211"
-      - "orderer2.example.com:172.18.244.211"
-      - "peer0.org1.example.com:172.18.244.211"
-      - "peer1.org1.example.com:172.18.244.211"
-      - "peer0.org2.example.com:172.18.244.249"
-      - "peer1.org2.example.com:172.18.244.249"
+    external_links:
+      - "orderer0.example.com:orderer0.example.com"
+      - "orderer1.example.com:orderer1.example.com"
+      - "orderer2.example.com:orderer2.example.com"
+      - "peer0.org1.example.com:peer0.org1.example.com"
+      - "peer1.org1.example.com:peer1.org1.example.com"
+      - "peer0.org2.example.com:peer0.org2.example.com"
+      - "peer1.org2.example.com:peer1.org2.example.com"
 
   peer1.org1.example.com:
     image: hyperledger/fabric-peer
@@ -167,7 +166,6 @@ services:
       - GOGC=200
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
       - CORE_LOGGING_LEVEL=INFO
-      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=nl_default
       - CORE_PEER_ENDORSER_ENABLED=true
       - CORE_PEER_PROFILE_ENABLED=true
       - CORE_PEER_GOSSIP_USELEADERELECTION=true
@@ -194,11 +192,11 @@ services:
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: peer node start
     container_name: peer1.org1.example.com
-    extra_hosts:
-      - "orderer0.example.com:172.18.244.211"
-      - "orderer1.example.com:172.18.244.211"
-      - "orderer2.example.com:172.18.244.211"
-      - "peer0.org1.example.com:172.18.244.211"
-      - "peer1.org1.example.com:172.18.244.211"
-      - "peer0.org2.example.com:172.18.244.249"
-      - "peer1.org2.example.com:172.18.244.249"
+    external_links:
+      - "orderer0.example.com:orderer0.example.com"
+      - "orderer1.example.com:orderer1.example.com"
+      - "orderer2.example.com:orderer2.example.com"
+      - "peer0.org1.example.com:peer0.org1.example.com"
+      - "peer1.org1.example.com:peer1.org1.example.com"
+      - "peer0.org2.example.com:peer0.org2.example.com"
+      - "peer1.org2.example.com:peer1.org2.example.com"
