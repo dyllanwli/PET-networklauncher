@@ -7,16 +7,16 @@ docker run -it -d --network="hyperledger-ov" \
 -e FABRIC_CA_SERVER_CA_NAME=ca-org1 \
 -e FABRIC_CA_SERVER_TLS_ENABLED=true \
 -e FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.org1.example.com-cert.pem \
--e FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/efd199a156bd2e180407668055872d28e82bf632bb81db11524a831fa01497ac_sk \
+-e FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/263a0a0a9008d7adcceea7d6f60e1763d59653e79123cb9b9932bc8eaaf2da82_sk \
 -p 7054:7054 \
 -v /opt/go/src/github.com/hyperledger/fabric-test/fabric/common/tools/cryptogen/crypto-config/peerOrganizations/org1.example.com/ca/:/etc/hyperledger/fabric-ca-server-config \
 hyperledger/fabric-ca \
-sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.org1.example.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/efd199a156bd2e180407668055872d28e82bf632bb81db11524a831fa01497ac_sk -b admin:adminpw -d'
+sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.org1.example.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/263a0a0a9008d7adcceea7d6f60e1763d59653e79123cb9b9932bc8eaaf2da82_sk -b admin:adminpw -d'
 
 docker run -it -d --network="hyperledger-ov" \
 --name="orderer0.example.com" \
 -e GODEBUG=netdns=go \
--e ORDERER_GENERAL_LOGLEVEL=ERROR \
+-e ORDERER_GENERAL_LOGLEVEL=DEBUG \
 -e ORDERER_GENERAL_LISTENADDRESS=0.0.0.0 \
 -e ORDERER_GENERAL_GENESISMETHOD=file \
 -e ORDERER_GENERAL_GENESISFILE=/opt/hyperledger/fabric/msp/crypto-config/ordererOrganizations/orderer.block \
@@ -37,7 +37,7 @@ docker run -it -d --network="hyperledger-ov" \
 -e GODEBUG=netdns=go \
 -e GOGC=200 \
 -e CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock \
--e CORE_LOGGING_LEVEL=INFO \
+-e CORE_LOGGING_LEVEL=DEBUG \
 -e CORE_PEER_ENDORSER_ENABLED=true \
 -e CORE_PEER_PROFILE_ENABLED=true \
 -e CORE_PEER_GOSSIP_USELEADERELECTION=true \
@@ -67,7 +67,7 @@ docker run -it -d --network="hyperledger-ov" \
 -e GODEBUG=netdns=go \
 -e GOGC=200 \
 -e CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock \
--e CORE_LOGGING_LEVEL=INFO \
+-e CORE_LOGGING_LEVEL=DEBUG \
 -e CORE_PEER_ENDORSER_ENABLED=true \
 -e CORE_PEER_PROFILE_ENABLED=true \
 -e CORE_PEER_GOSSIP_USELEADERELECTION=true \
@@ -83,8 +83,8 @@ docker run -it -d --network="hyperledger-ov" \
 -e CORE_PEER_TLS_ROOTCERT_FILE=/opt/hyperledger/fabric/msp/crypto-config/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls/ca.crt \
 -v /var/run/:/host/var/run/ \
 -v /opt/go/src/github.com/hyperledger/fabric-test/fabric/common/tools/cryptogen/crypto-config:/opt/hyperledger/fabric/msp/crypto-config \
--p 7061:7051 \
--p 6051:7053 \
+-p 7062:7051 \
+-p 6052:7053 \
 --link orderer0.example.com:orderer0.example.com \
 --link peer0.org1.example.com:peer0.org1.example.com \
 -w /opt/gopath/src/github.com/hyperledger/fabric/peer \

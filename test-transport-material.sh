@@ -3,9 +3,10 @@
 # transport crypto-config or channel file to other host
 
 HOST1=39.108.167.205
-HOST2=120.79.163.88
+# HOST2=120.79.163.88
+HOST2=172.16.50.151
 
-
+NL_DIR=/opt/go/src/github.com/hyperledger/fabric-test/tools/NL
 CRYPTO_CONFIG_DIR=/opt/go/src/github.com/hyperledger/fabric-test/fabric/common/tools
 # in this test, running create network on host1 and transport file to host2
 

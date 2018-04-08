@@ -1,0 +1,49 @@
+#!/bin/bash
+#
+# bring up network 
+
+# test case
+# docker run -it --rm --network hyperledger-ov  alpine /bin/ash 
+#
+# on machine1
+docker rm -f $(docker ps -aq)
+docker rmi -f $(docker images | grep dev | awk '{print $3}')
+yes | docker network prune
+# prune the network
+docker-compose -f machine-1.yml up -d
+# docker-compose -f machine-1.1.yml up -d
+# docker-compose -f machine-2.1.yml up -d
+
+docker network create --attachable --driver overlay hyperledger-ov
+
+docker network disconnect nl_default ca0
+docker network disconnect nl_default orderer0.example.com
+docker network disconnect nl_default orderer1.example.com
+docker network disconnect nl_default orderer2.example.com
+docker network disconnect nl_default peer0.org1.example.com
+docker network disconnect nl_default peer1.org1.example.com
+
+
+docker network connect hyperledger-ov ca0
+docker network connect hyperledger-ov orderer0.example.com
+docker network connect hyperledger-ov orderer1.example.com
+docker network connect hyperledger-ov orderer2.example.com
+docker network connect hyperledger-ov peer0.org1.example.com
+docker network connect hyperledger-ov peer1.org1.example.com
+yes | docker network prune
+# TX=/opt/hyperledger/fabric/msp/crypto-config/ordererOrganizations/testorgschannel1.tx
+# CERT_DIR=/opt/hyperledger/fabric/msp/crypto-config/ordererOrganizations/example.com/orderers/orderer0.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
+# docker exec -it peer0.org1.example.com peer channel create -o orderer0.example.com:7050 -c testorgschannel1 -f $TX --tls true --cafile $CERT_DIR
+
+
+# on machine2
+docker-compose -f machine-2.yml up -d 
+docker network disconnect nl_default ca1
+docker network disconnect nl_default peer0.org2.example.com
+docker network disconnect nl_default peer1.org2.example.com
+
+docker network connect hyperledger-ov ca1
+docker network connect hyperledger-ov peer0.org2.example.com
+docker network connect hyperledger-ov peer1.org2.example.com
+yes | docker network prune
+# docker exec -it peer0.org2.example.com peer channel create -o orderer0.example.com:7050 -c testorgschannel1 -f /opt/hyperledger/fabric/msp/crypto-config/ordererOrganizations/testorgschannel1.tx
