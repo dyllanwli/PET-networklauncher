@@ -3,13 +3,14 @@
 # bring up network 
 
 # test case
-# docker run -it --rm --network fabric_ov  alpine /bin/ash 
+# docker run -it --rm --network fabric_ov -p 8888:8888 --sysctl net.ipv6.conf.all.disable_ipv6=1 alpine /bin/ash 
 #
 # on machine1
 # rm -rf /tmp/*
 docker rm -f $(docker ps -aq)
 docker rmi -f $(docker images | grep dev | awk '{print $3}')
 yes | docker network prune
+docker network create --attachable --driver overlay fabric_ov --subnet 10.10.0.0/24
 # prune the network
 # docker-compose -f machine-1.yml up -d
 docker-compose -f machine-1.links.yml up -d
@@ -18,7 +19,7 @@ docker-compose -f machine-1.links.yml up -d
 # docker-compose -f machine-1.151.yml up -d
 # docker-compose -f machine-2.153.yml up -d
 
-docker network create --attachable --driver overlay fabric_ov --subnet 10.10.0.0/24
+
 
 docker network disconnect nl_default ca0
 docker network disconnect nl_default orderer0.example.com
