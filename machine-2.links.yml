@@ -21,14 +21,14 @@ services:
     #     - "orderer1.example.com:172.16.50.151"
     #     - "orderer2.example.com:172.16.50.151"
     #     - "peer0.org2.example.com:172.16.50.153"
-    external_links:
-      - "orderer0.example.com:orderer0.example.com"
-      - "orderer1.example.com:orderer1.example.com"
-      - "orderer2.example.com:orderer2.example.com"
-      - "peer0.org1.example.com:peer0.org1.example.com"
-      - "peer1.org1.example.com:peer1.org1.example.com"
-      - "peer0.org2.example.com:peer0.org2.example.com"
-      - "peer1.org2.example.com:peer1.org2.example.com"
+    # links:
+    #   - "orderer0.example.com:orderer0.example.com"
+    #   - "orderer1.example.com:orderer1.example.com"
+    #   - "orderer2.example.com:orderer2.example.com"
+    #   - "peer0.org1.example.com:peer0.org1.example.com"
+    #   - "peer1.org1.example.com:peer1.org1.example.com"
+      # - "peer0.org2.example.com:peer0.org2.example.com"
+      # - "peer1.org2.example.com:peer1.org2.example.com"
 
   peer0.org2.example.com:
     image: hyperledger/fabric-peer
@@ -65,14 +65,14 @@ services:
     #     - "orderer1.example.com:172.16.50.151"
     #     - "orderer2.example.com:172.16.50.151"
     #     - "peer0.org1.example.com:172.16.50.151"
-    external_links:
+    links:
       - "orderer0.example.com:orderer0.example.com"
       - "orderer1.example.com:orderer1.example.com"
       - "orderer2.example.com:orderer2.example.com"
       - "peer0.org1.example.com:peer0.org1.example.com"
       - "peer1.org1.example.com:peer1.org1.example.com"
-      - "peer0.org2.example.com:peer0.org2.example.com"
-      - "peer1.org2.example.com:peer1.org2.example.com"
+      # - "peer0.org2.example.com:peer0.org2.example.com"
+      # - "peer1.org2.example.com:peer1.org2.example.com"
 
   peer1.org2.example.com:
     image: hyperledger/fabric-peer
@@ -109,12 +109,12 @@ services:
     #     - "orderer1.example.com:172.16.50.151"
     #     - "orderer2.example.com:172.16.50.151"
     #     - "peer0.org2.example.com:172.16.50.153"
-    external_links:
+    links:
       - "orderer0.example.com:orderer0.example.com"
       - "orderer1.example.com:orderer1.example.com"
       - "orderer2.example.com:orderer2.example.com"
       - "peer0.org1.example.com:peer0.org1.example.com"
       - "peer1.org1.example.com:peer1.org1.example.com"
       - "peer0.org2.example.com:peer0.org2.example.com"
-      - "peer1.org2.example.com:peer1.org2.example.com"
+      # - "peer1.org2.example.com:peer1.org2.example.com"
 

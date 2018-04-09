@@ -1,5 +1,5 @@
 {
-    "network_name":"hyperledger-ov",
+    "network_name":"fabric_ov",
     "host1": {
         "ip_addr": "39.108.167.205",
         "container": ["ca0", 

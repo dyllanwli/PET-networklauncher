@@ -1,6 +1,6 @@
-# docker network create --subnet 10.10.0.0/24 --attachable --driver overlay hyperledger-ov
+# docker network create --subnet 10.10.0.0/24 --attachable --driver overlay fabric_ov
 
-docker run -it -d --network="hyperledger-ov" \
+docker run -it -d --network="fabric_ov" \
 --name="ca0" \
 -e GODEBUG=netdns=go \
 -e FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server \
@@ -13,7 +13,7 @@ docker run -it -d --network="hyperledger-ov" \
 hyperledger/fabric-ca \
 sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.org1.example.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/263a0a0a9008d7adcceea7d6f60e1763d59653e79123cb9b9932bc8eaaf2da82_sk -b admin:adminpw -d'
 
-docker run -it -d --network="hyperledger-ov" \
+docker run -it -d --network="fabric_ov" \
 --name="orderer0.example.com" \
 -e GODEBUG=netdns=go \
 -e ORDERER_GENERAL_LOGLEVEL=DEBUG \
@@ -32,7 +32,7 @@ docker run -it -d --network="hyperledger-ov" \
 hyperledger/fabric-orderer \
 orderer 
 
-docker run -it -d --network="hyperledger-ov" \
+docker run -it -d --network="fabric_ov" \
 --name="peer0.org1.example.com" \
 -e GODEBUG=netdns=go \
 -e GOGC=200 \
@@ -62,7 +62,7 @@ peer node start
 
 
 
-docker run -it -d --network="hyperledger-ov" \
+docker run -it -d --network="fabric_ov" \
 --name="peer1.org1.example.com" \
 -e GODEBUG=netdns=go \
 -e GOGC=200 \
