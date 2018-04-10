@@ -28,7 +28,7 @@ keyWord=$1
 
 #bring down network
 echo "..... clean network ..... docker images key word: $keyWord"
-docker-compose down
+# docker-compose down
 
 #remove dead docker containers
 echo "..... remove containers ....."
