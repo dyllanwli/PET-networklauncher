@@ -13,4 +13,6 @@ echo "removing $HOST2 cryptogen"
 ssh root@$HOST2 -i ~/.ssh/id_rsa "cd $CRYPTO_CONFIG_DIR; rm -rf cryptogen"
 cd $CRYPTO_CONFIG_DIR
 echo "transporting $CRYPTO_CONFIG_DIR to $HOST2"
-scp -i ~/.ssh/id_rsa -r cryptogen root@${HOST2}:$CRYPTO_CONFIG_DIR
+scp -i ~/.ssh/id_rsa -r cryptogen root@39.108.167.205:/opt/go/src/github.com/hyperledger/fabric-test/fabric/common/tools
+scp -i ~/.ssh/id_rsa -r root@39.108.167.205:/opt/go/src/github.com/hyperledger/fabric-test/fabric/common/tools/cryptogen ./
+scp -i ~/.ssh/id_rsa -r root@172.16.50.151:/opt/go/src/github.com/hyperledger/fabric-test/fabric/common/tools/cryptogen ./
