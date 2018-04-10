@@ -204,7 +204,8 @@ fi
 echo "node json2yml.js $jsonFILE $nPeerPerOrg $nOrderer $nBroker $nZoo $nOrg $dbType $nCA"
 
 node json2yml.js $jsonFILE $nPeerPerOrg $nOrderer $nBroker $nZoo $nOrg $dbType $nCA
-./create_local_data_volume.sh
+echo "-------test model not create local volumes at data-------------"
+# ./create_local_data_volume.sh
 # add volumes parameter into compose-file
 
 #fix CA _sk in docker-compose.yml
@@ -252,7 +253,7 @@ if [ $Req == "create" ]; then
        #tmpOrd="orderer"$i
        
       # docker-compose -f docker-compose.yml up -d $tmpOrd
-      echo "test mode do not create the network"
+      echo "-----------test mode do not create the network----------"
    #done
 fi
 
