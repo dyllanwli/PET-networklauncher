@@ -9,10 +9,38 @@ docker run -it --rm --network fabric_ov --name alp1 alpine ash
 docker run -it --rm --network fabric_ov --name alp2 alpine ash 
 docker run -it --rm --network fabric_ov --name alp3 alpine ash 
 # service test command
-docker service create --network fabric_ov --replicas 1 --name ser1 --constraint "node.hostname==iZwz9gd8k08kdmtd4qg7rhZ" alpine sleep 1h
-docker service create --network fabric_ov --replicas 1 --name ser2 --constraint "node.hostname==iZwz9gd8k08kdmtd4qg7riZ" alpine sleep 1h
-docker service create --network fabric_ov --replicas 1 --name ser3 --constraint "node.hostname==blockchainmonion153" alpine sleep 1h
-docker service create --network fabric_ov --replicas 1 --name ser4 --constraint "node.hostname==blockchainmaster151" alpine sleep 1h
+docker service create --network fabric_ov \
+--replicas 1 \
+--name ser1 \
+--constraint "node.hostname==iZwz9gd8k08kdmtd4qg7rhZ" \
+--publish published=53,target=53,protocol=tcp,mode=host \
+--mode replicated \
+alpine sleep 1h
+
+docker service create --network fabric_ov \
+--replicas 1 \
+--name ser2 \
+--constraint "node.hostname==iZwz9gd8k08kdmtd4qg7riZ" \
+--publish published=53,target=53,protocol=tcp,mode=host \
+--mode replicated \
+alpine sleep 1h
+
+docker service create --network fabric_ov \
+--replicas 1 \
+--name ser3 \
+--constraint "node.hostname==blockchainmaster151" \
+--publish published=53,target=53,protocol=tcp,mode=host \
+--mode replicated \
+alpine sleep 1h
+
+docker service create --network fabric_ov \
+--replicas 1 \
+--name ser4 \
+--constraint "node.hostname==blockchainmonion153" \
+--publish published=53,target=53,protocol=tcp,mode=host \
+--mode replicated \
+alpine sleep 1h
+
 #
 # 
 #  ATTEHTION
