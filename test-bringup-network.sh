@@ -6,7 +6,9 @@
 #  --sysctl net.ipv6.conf.all.disable_ipv6=1 
 # docker run -it --rm --network fabric_ov --name alp0 alpine /bin/ash 
 # service test command
-# docker service create --network fabric_ov --replicas 2 alpine sleep 1h
+docker service create --network fabric_ov --replicas 1 --name ser1 --constraint "node.hostname==iZwz9gd8k08kdmtd4qg7riZ" alpine sleep 1h
+docker service create --network fabric_ov --replicas 1 --name ser2 --constraint "node.hostname==iZwz9gd8k08kdmtd4qg7riZ" alpine sleep 1h
+docker service create --network fabric_ov --replicas 1 --name ser3 alpine sleep 1h
 #
 # on machine1
 # rm -rf /tmp/*
