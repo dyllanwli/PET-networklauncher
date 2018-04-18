@@ -11,7 +11,8 @@
 #
 
 HostIP1="0.0.0.0"
-HostPort=7050
+HostPort=2377
+ORDERER_outports=2377
 ordererPort=5005
 kafkaPort=9092
 peerPort=7061
@@ -251,7 +252,7 @@ do
           do
               j=$[ i - 1 ]
               tmpAddr="orderer"$j"."$comName
-              tmp=$tmpAddr":7050"
+              tmp=$tmpAddr":$ORDERER_outports"
               echo "         - $tmp" >> $cfgOutFile
           done
 
