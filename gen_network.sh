@@ -229,7 +229,7 @@ do
     Dir=$MSPDIR/peerOrganizations/org$j"."$comName"/ca"
     cd $Dir
     tt=`ls *sk`
-
+    echo "---[seding ca file to yml]---  ca$i:$tt"
     cd $CWD
 
     sed $sedOpt "s/CA_SK$i/$tt/g" docker-compose.yml

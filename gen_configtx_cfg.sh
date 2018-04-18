@@ -15,7 +15,7 @@ HostPort=2377
 ORDERER_outports=2377
 ordererPort=5005
 kafkaPort=9092
-peerPort=7061
+peerPort=4789
 
 function printHelp {
    echo "Usage: "
@@ -335,7 +335,7 @@ do
 
              #tmpPort=$[ HostPort + peersPerOrg * ( i - 1 ) ]
              #tmpPort=$[ peerPort + peersPerOrg * ( i - 1 ) ]
-             tmpPort=7051
+             tmpPort=$peerPort
              tmpHost="peer0.org"$i"."$comName
              echo "        AnchorPeers:" >> $cfgOutFile
              echo "            - Host: $tmpHost" >> $cfgOutFile

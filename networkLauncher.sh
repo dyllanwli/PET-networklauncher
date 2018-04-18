@@ -270,6 +270,15 @@ echo "./gen_configtx_cfg.sh -o $nOrderer -k $nKafka -p $nPeersPerOrg -r $nOrg -h
 
 echo " "
 echo "        ####################################################### "
+echo "        #         !!configurating  configtx.yaml  !!          # "
+echo "        ####################################################### "
+echo " "
+# do something configruat
+
+
+
+echo " "
+echo "        ####################################################### "
 echo "        #         create orderer genesis block                # "
 echo "        ####################################################### "
 echo " "
