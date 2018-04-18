@@ -3,7 +3,7 @@ const fs = require('fs')
 // const { exec } = require("child_process")
 // read arguments after node file name
 
-filepath = "./network.json"
+filepath = "../network.json"
 
 // console.log(args)
 

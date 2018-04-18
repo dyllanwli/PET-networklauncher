@@ -22,6 +22,6 @@ dir = "./docker-compose.yml"
 for i in os.listdir(dir):
     if i.endswith(".yml"):
         fileName = i
-token = "0000"
-marks = ["FABRIC_CA_SERVER_TLS_KEYFILE","--ca.certfile"]
-replace_ca(fileName,marks,token)
+        token = "0000"
+        marks = ["FABRIC_CA_SERVER_TLS_KEYFILE","--ca.certfile"]
+        replace_ca(fileName,marks,token)
