@@ -64,10 +64,14 @@ services:
     # networks:
     #   - fabric_ov
     extra_hosts:
-      - "orderer0.example.com:114.242.193.198"
-      - "orderer1.example.com:114.242.193.198"
-      - "orderer2.example.com:114.242.193.198"
-      - "peer0.org2.example.com:114.242.193.198"
+      # - "orderer0.example.com:114.242.193.198"
+      # - "orderer1.example.com:114.242.193.198"
+      # - "orderer2.example.com:114.242.193.198"
+      # - "peer0.org2.example.com:114.242.193.198"
+      - "orderer0.example.com:172.16.50.153"
+      - "orderer1.example.com:172.16.50.153"
+      - "orderer2.example.com:172.16.50.153"
+      - "peer0.org2.example.com:172.16.50.151"
 
   peer1.org1.example.com:
     image: hyperledger/fabric-peer
@@ -104,7 +108,10 @@ services:
     # networks:
     #   - fabric_ov
     extra_hosts:
-      - "orderer0.example.com:114.242.193.198"
-      - "orderer1.example.com:114.242.193.198"
-      - "orderer2.example.com:114.242.193.198"
+      # - "orderer0.example.com:114.242.193.198"
+      # - "orderer1.example.com:114.242.193.198"
+      # - "orderer2.example.com:114.242.193.198"
+      - "orderer0.example.com:172.16.50.153"
+      - "orderer1.example.com:172.16.50.153"
+      - "orderer2.example.com:172.16.50.153"
 

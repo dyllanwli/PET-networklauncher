@@ -4,7 +4,7 @@
 
 # test case
 #  --sysctl net.ipv6.conf.all.disable_ipv6=1 
-docker run -it --rm --network fabric_ov --name alp0 alpine ash 
+docker run -it --rm --network nl_default --name alp0 alpine ash 
 docker run -it --rm --network fabric_ov --name alp1 alpine ash 
 docker run -it --rm --network fabric_ov --name alp2 alpine ash 
 docker run -it --rm --network fabric_ov --name alp3 alpine ash 

@@ -1,22 +1,30 @@
 {
-    "network_name":"fabric_ov",
-    "host1": {
-        "ip_addr": "39.108.167.205",
-        "container": [ 
-            "orderer0.example.com", 
-            "orderer1.example.com", 
-            "orderer2.example.com"
-            ]
+    "yaml1": {
+        "ip_address": "172.16.50.153",
+        "containers": [
+            "orderer0.example.com"
+        ],
+        "extra_arguments": [],
+        "remove_arguments": []
     },
-    "host2": {
-        "ip_addr": "120.79.163.88",
-        "container": [
+    "yaml2": {
+        "ip_address": "172.16.50.153",
+        "containers": [
             "ca0",
-            "ca1",
-            "peer0.org2.example.com",
-            "peer1.org2.example.com",
             "peer0.org1.example.com",
             "peer1.org1.example.com"
-        ]
+        ],
+        "extra_arguments": [],
+        "remove_arguments": []
+    },
+    "yaml3": {
+        "ip_address": "120.79.163.88",
+        "containers": [
+            "ca1",
+            "peer0.org2.example.com",
+            "peer1.org2.example.com"
+        ],
+        "extra_arguments": [],
+        "remove_arguments": []
     }
 }
