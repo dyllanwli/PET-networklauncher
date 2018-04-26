@@ -7,6 +7,9 @@ Network Launcher
 
 test network usage `./networkLauncher.sh -o 1 -x 2 -r 2 -p 2 -n 1 -t solo -f test -w 0.0.0.0 -S enabled -c 2s -l INFO -q INFO -B 2000`
 
++ `./networkLauncher.sh -o 1 -x 2 -r 2 -p 2 -n 1 -t solo -f test -S enabled -c 2s -l INFO -q INFO -B 2000`
++ `./networkLauncher.sh -o 1 -x 4 -r 4 -p 1 -n 2 -t solo -f test -S enabled -c 2s -l INFO -q INFO -B 2000`
+
 # networkLauncher.sh
 
 This is the main script to execute all tasks.

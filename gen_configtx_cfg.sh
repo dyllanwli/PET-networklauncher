@@ -11,14 +11,14 @@
 #
 
 HostIP1="0.0.0.0"
-HostPort=2377
-# HostPort=7050
-ORDERER_outports=2377
-# ORDERER_outports=7050
+# HostPort=2377
+HostPort=7050
+# ORDERER_outports=2377
+ORDERER_outports=7050
 ordererPort=5005
 kafkaPort=9092
-peerPort=4789
-# peerPort=7051
+# peerPort=4789
+peerPort=7051
 
 function printHelp {
    echo "Usage: "
