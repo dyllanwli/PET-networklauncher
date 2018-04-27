@@ -73,7 +73,7 @@ Organizations:
 
         AnchorPeers:
             - Host: peer0.org1.example.com
-              Port: 4789
+              Port: 7051
 
     - &PeerOrg2
         Name: PeerOrg2
@@ -84,7 +84,7 @@ Organizations:
 
         AnchorPeers:
             - Host: peer0.org2.example.com
-              Port: 4789
+              Port: 7051
 
 
 ################################################################################
@@ -102,7 +102,7 @@ Orderer: &OrdererDefaults
     OrdererType: solo
 
     Addresses:
-         - orderer0.example.com:2377
+         - orderer0.example.com:7050
 
 
     # Batch Timeout: The amount of time to wait before creating a batch
